@@ -1,0 +1,909 @@
+import 'dart:async';
+import 'dart:io';
+import 'dart:ui';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:purchases_flutter/models/offerings_wrapper.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:puskazz_app/Utils/EncriptionManager.dart';
+import 'package:puskazz_app/Widgets/GrdientButton.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class PurchaseScreen extends StatefulWidget {
+  @override
+  _PurchaseScreenState createState() => _PurchaseScreenState();
+}
+
+class _PurchaseScreenState extends State<PurchaseScreen> {
+  bool _isPurchasing = false;
+  bool _isPurchased = false;
+  bool _isSubscribed = false;
+
+  List prices = [];
+  int? expiresInDay;
+  Offerings? offerings;
+
+  @override
+  void initState() {
+    super.initState();
+    _initialize();
+  }
+
+  Future<void> _initialize() async {
+    try {
+      offerings = await Purchases.getOfferings();
+      if (offerings!.current != null) {
+        offerings!.current!.availablePackages.forEach((element) {
+          setState(() {
+            prices.add(element.storeProduct.priceString);
+          });
+        });
+      } else {
+        debugPrint("Offerings is null");
+      }
+    } on PlatformException catch (e) {
+      debugPrint("Error: $e");
+      debugPrint("Offerings has errors");
+    }
+  }
+
+  Future<void> _buyProduct(int index) async {
+    setState(() {
+      _isPurchasing = true;
+    });
+
+    if (Platform.isAndroid) {
+      try {
+        CustomerInfo purchaserInfo = await Purchases.purchasePackage(
+            offerings!.current!.availablePackages[index]);
+
+        String entitlementId = "";
+        if (Platform.isAndroid) {
+          if (index == 0) {
+            entitlementId = "Premium_1";
+          } else if (index == 1) {
+            entitlementId = "Premium_3";
+          } else if (index == 2) {
+            entitlementId = "Premium_6";
+          }
+        } else {
+          if (index == 0) {
+            entitlementId = "puskazz_premium_1";
+          } else if (index == 1) {
+            entitlementId = "puskazz_premium_3m";
+          } else if (index == 2) {
+            entitlementId = "puskazz_premium_6_months";
+          }
+        }
+
+        if (purchaserInfo.entitlements.all[entitlementId]?.isActive == true) {
+          setState(() {
+            _isPurchased = true;
+          });
+          print("Purchase successful");
+
+          final prefs = await SharedPreferences.getInstance();
+          prefs.setString("purchasedBundleIndex",
+              EncriptionManager().encrypt(index.toString()));
+
+          Navigator.pushNamedAndRemoveUntil(
+              context, '/thanks', (route) => false);
+        }
+      } catch (e) {
+        Navigator.pushNamedAndRemoveUntil(
+            context, '/errorPurchase', (route) => false);
+      } finally {
+        setState(() {
+          _isPurchasing = false;
+        });
+      }
+    }
+  }
+
+  Future<void> _restorePurchase() async {
+    setState(() {
+      _isPurchasing = true;
+    });
+
+    try {
+      CustomerInfo purchaserInfo = await Purchases.restorePurchases();
+      String entitlementId = "";
+      for (var index = 0;
+          index < purchaserInfo.entitlements.all.length;
+          index++) {
+        if (Platform.isAndroid) {
+          if (index == 0) {
+            entitlementId = "Premium_1";
+            if (purchaserInfo.entitlements.all[entitlementId]?.isActive ==
+                true) {
+              setState(() {
+                _isPurchased = true;
+              });
+              print("Purchase successful");
+
+              var prefs = await SharedPreferences.getInstance();
+              prefs.setString("purchasedBundleIndex",
+                  EncriptionManager().encrypt(index.toString()));
+
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/thanks', (route) => false);
+            } else {
+              print("Purchase not successful");
+            }
+          } else if (index == 1) {
+            entitlementId = "Premium_3";
+            if (purchaserInfo.entitlements.all[entitlementId]?.isActive ==
+                true) {
+              setState(() {
+                _isPurchased = true;
+              });
+              print("Purchase successful");
+
+              var prefs = await SharedPreferences.getInstance();
+              prefs.setString("purchasedBundleIndex",
+                  EncriptionManager().encrypt(index.toString()));
+
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/thanks', (route) => false);
+            } else {
+              print("Purchase not successful");
+            }
+          } else if (index == 2) {
+            entitlementId = "Premium_6";
+            if (purchaserInfo.entitlements.all[entitlementId]?.isActive ==
+                true) {
+              setState(() {
+                _isPurchased = true;
+              });
+              print("Purchase successful");
+
+              var prefs = await SharedPreferences.getInstance();
+              prefs.setString("purchasedBundleIndex",
+                  EncriptionManager().encrypt(index.toString()));
+
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/thanks', (route) => false);
+            } else {
+              print("Purchase not successful");
+            }
+          }
+        } else {
+          if (index == 0) {
+            entitlementId = "puskazz_premium_1";
+            if (purchaserInfo.entitlements.all[entitlementId]?.isActive ==
+                true) {
+              setState(() {
+                _isPurchased = true;
+              });
+              print("Purchase successful");
+
+              var prefs = await SharedPreferences.getInstance();
+              prefs.setString("purchasedBundleIndex",
+                  EncriptionManager().encrypt(index.toString()));
+
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/thanks', (route) => false);
+            } else {
+              print("Purchase not successful");
+            }
+          } else if (index == 1) {
+            entitlementId = "puskazz_premium_3m";
+            if (purchaserInfo.entitlements.all[entitlementId]?.isActive ==
+                true) {
+              setState(() {
+                _isPurchased = true;
+              });
+              print("Purchase successful");
+
+              var prefs = await SharedPreferences.getInstance();
+              prefs.setString("purchasedBundleIndex",
+                  EncriptionManager().encrypt(index.toString()));
+
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/thanks', (route) => false);
+            } else {
+              print("Purchase not successful");
+            }
+          } else if (index == 2) {
+            entitlementId = "puskazz_premium_6_months";
+            if (purchaserInfo.entitlements.all[entitlementId]?.isActive ==
+                true) {
+              setState(() {
+                _isPurchased = true;
+              });
+              print("Purchase successful");
+
+              var prefs = await SharedPreferences.getInstance();
+              prefs.setString("purchasedBundleIndex",
+                  EncriptionManager().encrypt(index.toString()));
+
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/thanks', (route) => false);
+            } else {
+              print("Purchase not successful");
+            }
+          }
+        }
+      }
+    } catch (e) {
+      Navigator.pushNamedAndRemoveUntil(
+          context, '/errorPurchase', (route) => false);
+    } finally {
+      setState(() {
+        _isPurchasing = false;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+        onWillPop: () async {
+          Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
+          return false;
+        },
+        child: _isPurchasing == false
+            ? Scaffold(
+                body: LayoutBuilder(builder: (context, constraints) {
+                  return SingleChildScrollView(
+                    child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minHeight: constraints.maxHeight,
+                          minWidth: constraints.maxWidth,
+                        ),
+                        child: Stack(
+                          children: [
+                            Center(
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "\nVálts",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 48,
+                                          color: Theme.of(context).primaryColor,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          GradientText(
+                                            "Prémium",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w900,
+                                              fontSize: 48,
+                                            ),
+                                            gradient: LinearGradient(
+                                              begin: Alignment.topLeft,
+                                              end: Alignment.bottomRight,
+                                              colors: [
+                                                Color(0xFF70d6ff),
+                                                Color(0xFFff70a6),
+                                                Color(0xFFff9770),
+                                                Color.fromARGB(
+                                                    255, 255, 189, 22),
+                                              ],
+                                            ),
+                                          ),
+                                          Text(
+                                            "ra!",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize: 48,
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                  SizedBox(height: 24),
+                                  SizedBox(height: 24),
+                                  ConstrainedBox(
+                                    constraints: BoxConstraints(
+                                      maxHeight:
+                                          MediaQuery.of(context).size.height /
+                                              1.85,
+                                      maxWidth:
+                                          MediaQuery.of(context).size.width,
+                                    ),
+                                    child: ListView(
+                                      shrinkWrap: true,
+                                      scrollDirection: Axis.horizontal,
+                                      controller: ScrollController(
+                                          initialScrollOffset:
+                                              MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  5,
+                                          keepScrollOffset: true,
+                                          debugLabel: "ScrollController"),
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 16.0, vertical: 8.0),
+                                          child: InkWell(
+                                            onTap: () {
+                                              _buyProduct(0);
+                                            },
+                                            child: GradientButton(
+                                              title: "1 hónap",
+                                              content:
+                                                  "1 hónapig korlátlanul használhatod az összes prémium funkciót.",
+                                              price: prices[0] ?? "0",
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  2.75,
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                  2.5,
+                                              onPressed: () {},
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 16.0, vertical: 8.0),
+                                          child: InkWell(
+                                            onTap: () {
+                                              _buyProduct(1);
+                                            },
+                                            child: GradientButton(
+                                              title: "3 hónap",
+                                              content:
+                                                  "3 hónapig korlátlanul használhatod az összes prémium funkciót.",
+                                              price: prices[1] ?? "0",
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  2.5,
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                  2.5,
+                                              onPressed: () {},
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 16.0, vertical: 8.0),
+                                          child: InkWell(
+                                            onTap: () {
+                                              _buyProduct(2);
+                                            },
+                                            child: GradientButton(
+                                              title: "6 hónap",
+                                              content:
+                                                  "6 hónapig korlátlanul használhatod az összes prémium funkciót.",
+                                              price: prices[2] ?? "0",
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  2.75,
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                  2.5,
+                                              onPressed: () {},
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(12),
+                                    child: Text(
+                                      "Az előfizetés automatikusan megújul, ha nem mondod le!",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: Theme.of(context).primaryColor,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 24),
+                                  InkWell(
+                                    onTap: () {
+                                      for (int i = 0; i < prices.length; i++) {
+                                        _restorePurchase();
+                                      }
+                                    },
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width /
+                                          1.25,
+                                      height:
+                                          MediaQuery.of(context).size.height /
+                                              12,
+                                      padding: EdgeInsets.all(12),
+                                      decoration: BoxDecoration(
+                                          color: Theme.of(context)
+                                                      .scaffoldBackgroundColor ==
+                                                  Colors.black
+                                              ? Color(0xFF343434)
+                                              : Color(0xFfdedede),
+                                          borderRadius:
+                                              BorderRadius.circular(50)),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          GradientText(
+                                            "Előfizetés visszaszerzése",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                                fontWeight: FontWeight.bold),
+                                            gradient: LinearGradient(
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
+                                                colors: [
+                                                  Color(0xFF70d6ff),
+                                                  Color(0xFFff70a6),
+                                                  Color(0xFFff9770),
+                                                  Color.fromARGB(
+                                                      255, 255, 189, 22),
+                                                ]),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 24),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "Mit tud a",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 28,
+                                          color: Theme.of(context).primaryColor,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          GradientText(
+                                            "Prémium",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w900,
+                                              fontSize: 28,
+                                            ),
+                                            gradient: LinearGradient(
+                                              begin: Alignment.topLeft,
+                                              end: Alignment.bottomRight,
+                                              colors: [
+                                                Color(0xFF70d6ff),
+                                                Color(0xFFff70a6),
+                                                Color(0xFFff9770),
+                                                Color.fromARGB(
+                                                    255, 255, 189, 22),
+                                              ],
+                                            ),
+                                          ),
+                                          Text(
+                                            "?",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize: 28,
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 24),
+                                      GradientText(
+                                        "Az összes csomagra vonatkozik",
+                                        style: TextStyle(
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18),
+                                        gradient: LinearGradient(
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
+                                            colors: [
+                                              Color(0xFF70d6ff),
+                                              Color(0xFFff70a6),
+                                              Color(0xFFff9770),
+                                              Color.fromARGB(255, 255, 189, 22),
+                                            ]),
+                                      ),
+                                      SizedBox(height: 24),
+                                    ],
+                                  ),
+                                  Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    height:
+                                        MediaQuery.of(context).size.height / 2,
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context)
+                                                  .scaffoldBackgroundColor ==
+                                              Colors.white
+                                          ? Colors.grey[200]
+                                          : Colors.grey[900],
+                                      borderRadius: BorderRadius.circular(25),
+                                    ),
+                                    child: const Center(
+                                        child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        GradientText("Továbbküldhető puskák",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 24),
+                                            gradient: LinearGradient(
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
+                                                colors: [
+                                                  Color(0xFF70d6ff),
+                                                  Color(0xFFff70a6),
+                                                  Color(0xFFff9770),
+                                                  Color.fromARGB(
+                                                      255, 255, 189, 22),
+                                                ])),
+                                        GradientText("Elmenthető puskák",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 24),
+                                            gradient: LinearGradient(
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
+                                                colors: [
+                                                  Color(0xFF70d6ff),
+                                                  Color(0xFFff70a6),
+                                                  Color(0xFFff9770),
+                                                  Color.fromARGB(
+                                                      255, 255, 189, 22),
+                                                ])),
+                                        GradientText("Visszakereshető puskák",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 24),
+                                            gradient: LinearGradient(
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
+                                                colors: [
+                                                  Color(0xFF70d6ff),
+                                                  Color(0xFFff70a6),
+                                                  Color(0xFFff9770),
+                                                  Color.fromARGB(
+                                                      255, 255, 189, 22),
+                                                ])),
+                                        GradientText("Átnevezhető puskák",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 24),
+                                            gradient: LinearGradient(
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
+                                                colors: [
+                                                  Color(0xFF70d6ff),
+                                                  Color(0xFFff70a6),
+                                                  Color(0xFFff9770),
+                                                  Color.fromARGB(
+                                                      255, 255, 189, 22),
+                                                ])),
+                                        GradientText(
+                                            "Megváltoztatható app ikon",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 24),
+                                            gradient: LinearGradient(
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
+                                                colors: [
+                                                  Color(0xFF70d6ff),
+                                                  Color(0xFFff70a6),
+                                                  Color(0xFFff9770),
+                                                  Color.fromARGB(
+                                                      255, 255, 189, 22),
+                                                ])),
+                                      ],
+                                    )),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16.0, vertical: 32.0),
+                              child: IconButton(
+                                  onPressed: () {
+                                    Navigator.pushNamedAndRemoveUntil(
+                                        context, "/", (route) => false);
+                                  },
+                                  icon: Icon(
+                                    Icons.arrow_back_ios,
+                                    color: Theme.of(context).primaryColor,
+                                  )),
+                            ),
+                          ],
+                        )),
+                  );
+                }),
+              )
+            : Scaffold(
+                body: Center(
+                  child: CircularProgressIndicator(
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+              ));
+  }
+}
+
+class ThanksForPurchaseScreen extends StatefulWidget {
+  const ThanksForPurchaseScreen({super.key});
+
+  @override
+  State<ThanksForPurchaseScreen> createState() =>
+      _ThanksForPurchaseScreenState();
+}
+
+class _ThanksForPurchaseScreenState extends State<ThanksForPurchaseScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Container(
+              padding: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color(0xFF70d6ff),
+                      Color(0xFFff70a6),
+                      Color(0xFFff9770),
+                      Color.fromARGB(255, 255, 189, 22),
+                    ]),
+              ),
+              child: Icon(Icons.done,
+                  size: 100, color: Theme.of(context).scaffoldBackgroundColor),
+            ),
+            GradientText(
+              "Köszönjük a vásárlást!",
+              style: TextStyle(
+                fontWeight: FontWeight.w900,
+                fontSize: 28,
+              ),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color(0xFF70d6ff),
+                  Color(0xFFff70a6),
+                  Color(0xFFff9770),
+                  Color.fromARGB(255, 255, 189, 22),
+                ],
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, "/premiumsShowcase", (route) => false);
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width / 1.25,
+                height: MediaQuery.of(context).size.height / 12,
+                decoration: BoxDecoration(
+                    color: Theme.of(context).scaffoldBackgroundColor ==
+                            Colors.black
+                        ? Color(0xFF343434)
+                        : Color(0xFfdedede),
+                    borderRadius: BorderRadius.circular(50)),
+                child: Center(
+                  child: GradientText(
+                    "Kész!",
+                    style: TextStyle(
+                        fontSize: 24,
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.bold),
+                    gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Color(0xFF70d6ff),
+                          Color(0xFFff70a6),
+                          Color(0xFFff9770),
+                          Color.fromARGB(255, 255, 189, 22),
+                        ]),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ErrorPurchaseScreen extends StatelessWidget {
+  const ErrorPurchaseScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Container(
+              padding: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Colors.redAccent,
+                    Colors.red,
+                  ],
+                ),
+              ),
+              child: Icon(Icons.close_rounded,
+                  size: 100, color: Theme.of(context).scaffoldBackgroundColor),
+            ),
+            GradientText(
+              "Valami hiba történt a vásárlás során!",
+              style: TextStyle(
+                fontWeight: FontWeight.w900,
+                fontSize: 28,
+              ),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Colors.redAccent,
+                  Colors.red,
+                ],
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, "/", (route) => false);
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width / 1.25,
+                height: MediaQuery.of(context).size.height / 12,
+                decoration: BoxDecoration(
+                    color: Theme.of(context).scaffoldBackgroundColor ==
+                            Colors.black
+                        ? Color(0xFF343434)
+                        : Color(0xFfdedede),
+                    borderRadius: BorderRadius.circular(50)),
+                child: Center(
+                  child: GradientText(
+                    "Vissza",
+                    style: TextStyle(
+                        fontSize: 24,
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.bold),
+                    gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Colors.white,
+                          Colors.white,
+                        ]),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class InvalidPremiumScreen extends StatelessWidget {
+  const InvalidPremiumScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Container(
+              padding: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Colors.redAccent,
+                    Colors.red,
+                  ],
+                ),
+              ),
+              child: Icon(Icons.close_rounded,
+                  size: 100, color: Theme.of(context).scaffoldBackgroundColor),
+            ),
+            GradientText(
+              "A megadott kód érvénytelen, vagy lejárt!",
+              style: TextStyle(
+                fontWeight: FontWeight.w900,
+                fontSize: 28,
+              ),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Colors.redAccent,
+                  Colors.red,
+                ],
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, "/homepage", (route) => false);
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width / 1.25,
+                height: MediaQuery.of(context).size.height / 12,
+                decoration: BoxDecoration(
+                    color: Theme.of(context).scaffoldBackgroundColor ==
+                            Colors.black
+                        ? Color(0xFF343434)
+                        : Color(0xFfdedede),
+                    borderRadius: BorderRadius.circular(50)),
+                child: Center(
+                  child: GradientText(
+                    "Vissza",
+                    style: TextStyle(
+                        fontSize: 24,
+                        color: Theme.of(context).primaryColor,
+                        fontWeight: FontWeight.bold),
+                    gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Colors.white,
+                          Colors.white,
+                        ]),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

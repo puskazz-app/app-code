@@ -1,0 +1,26 @@
+name: alert
+description: A Flutter plugin for showing native alert dialog in IOS and Toast messages in Android.
+version: 2.0.1
+homepage: https://github.com/Oleksandr32/flutter-alert
+repository: https://github.com/Oleksandr32/flutter-alert
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+  flutter: ">=1.12.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.oleksandr32.alert
+        pluginClass: AlertPlugin
+      ios:
+        pluginClass: AlertPlugin

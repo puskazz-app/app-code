@@ -1,0 +1,154 @@
+{
+  "identifier" : "7046EF8F",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+
+  ],
+  "settings" : {
+    "_applicationInternalID" : "6463932309",
+    "_developerTeamID" : "39DPBV659T",
+    "_failTransactionsEnabled" : false,
+    "_lastSynchronizedDate" : 715366358.20134401,
+    "_locale" : "hu",
+    "_storefront" : "USA",
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Refund Request Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      }
+    ]
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "21383259",
+      "localizations" : [
+
+      ],
+      "name" : "Premium",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "1.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "6463932490",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "1 hónap Puskázz Prémium",
+              "displayName" : "Puskázz Prémium 1 hónap",
+              "locale" : "hu"
+            }
+          ],
+          "productID" : "puskazz_premium_1",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Puskazz Premium 1",
+          "subscriptionGroupID" : "21383259",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "3.99",
+          "familyShareable" : false,
+          "groupNumber" : 2,
+          "internalID" : "6463933417",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "3 hónap Puskázz Prémium",
+              "displayName" : "Puskázz Prémium 3 hónap",
+              "locale" : "hu"
+            }
+          ],
+          "productID" : "puskazz_premium_3m",
+          "recurringSubscriptionPeriod" : "P3M",
+          "referenceName" : "Puskazz Premium 3",
+          "subscriptionGroupID" : "21383259",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "6.99",
+          "familyShareable" : false,
+          "groupNumber" : 3,
+          "internalID" : "6463932978",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "6 hónap Puskázz Prémium",
+              "displayName" : "Puskázz Prémium 6 hónap",
+              "locale" : "hu"
+            }
+          ],
+          "productID" : "puskazz_premium_6",
+          "recurringSubscriptionPeriod" : "P6M",
+          "referenceName" : "Puskazz Premium 6",
+          "subscriptionGroupID" : "21383259",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}

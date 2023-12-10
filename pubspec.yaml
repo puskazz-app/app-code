@@ -1,0 +1,105 @@
+name: puskazz_app
+description: Puskázás egyszerűen, gyorsan, biztonságosan!
+publish_to: "none"
+version: 1.2.6+35
+
+environment:
+  sdk: ">=3.0.2 <4.0.0"
+  # sdk: '>=3.1.0-63.0.dev <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  dynamic_icon_flutter:
+    path: assets/dynamic_icon_flutter
+  flutter_exit_app: ^1.1.2
+  flutter_localizations:
+    sdk: flutter
+  fullscreen_window: ^1.0.4
+  google_fonts: ^5.1.0
+  html: ^0.15.2
+  http: ^1.1.0
+  image_picker: ^1.0.4
+  intl: any
+  path: ^1.8.2
+  path_provider: ^2.0.14
+  perfect_volume_control: ^1.0.5
+  screen_brightness: ^0.2.2
+  sqflite: ^2.2.7
+  url_launcher: ^6.1.12
+  wakelock: ^0.6.2
+  alert:
+    path: assets/flutter-alert
+  qr_bar_code: ^1.1.0
+  qr_flutter: ^4.1.0
+  mobile_scanner: ^3.3.0
+  nsd: ^2.3.1
+  web_socket_channel: ^2.4.0
+  flutter_image_compress: ^2.0.4
+  crypto: ^3.0.3
+  encrypt: ^5.0.1
+  multicast_dns: ^0.3.2+3
+  flutter_markdown: ^0.6.18+2
+  firebase_analytics: ^10.4.5
+  firebase_core: ^2.15.1
+  auto_size_text: ^3.0.0
+  blur: ^3.1.0
+  shared_preferences: ^2.2.1
+  flutter_network_connectivity: ^0.0.6
+  permission_handler: ^10.4.5
+  easy_permissions_handler: ^1.0.0
+  flutter_dynamic_icon: ^2.1.0
+  cupertino_will_pop_scope: ^1.2.1
+  math_expressions: ^2.4.0
+  flutter_stripe: ^9.4.0
+  flutter_dotenv: ^5.1.0
+  mad_pay: ^2.2.14
+  status_bar_control: ^3.2.1
+  purchases_flutter: ^5.7.0
+  shake: ^2.2.0
+  file_picker: ^5.2.10
+  power_file_view: ^1.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter_icons:
+  android: "launcher_icon"
+  image_path: "assets/icon/icon.png"
+  ios: "AppIcon"
+  image_path_ios: "assets/icon/iOS.png"
+  min_sdk_android: 21
+  web:
+    generate: true
+    image_path: "assets/icon/icon.png"
+    background_color: "#hexcode"
+    theme_color: "#hexcode"
+  windows:
+    generate: true
+    image_path: "assets/icon/icon.png"
+    icon_size: 48
+  macos:
+    generate: true
+    image_path: "assets/icon/iOS.png"
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/icon/icon.png
+    - assets/logos/discord_light.png
+    - assets/logos/discord_dark.png
+    - assets/logos/tiktok_light.png
+    - assets/logos/tiktok_dark.png
+    - assets/logos/website-light.svg
+    - assets/logos/website-dark.svg
+    - assets/fake_icons/calculator_icon.png
+    - assets/fake_icons/gallery_icon.png
+    - assets/fake_icons/lightbulb_icon.png
+    - assets/fake_icons/password_manager_icon.png
+    - assets/fake_icons/notes_app.png
+    - assets/fake_icons/webbrowser_icon.png
+    - .env
