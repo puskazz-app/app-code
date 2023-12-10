@@ -172,9 +172,6 @@ PODS:
   - libwebp/sharpyuv (1.3.2)
   - libwebp/webp (1.3.2):
     - libwebp/sharpyuv
-  - mad_pay_ios (0.0.1):
-    - Flutter
-    - SwiftProtobuf (~> 1.15)
   - Mantle (2.2.0):
     - Mantle/extobjc (= 2.2.0)
   - Mantle/extobjc (2.2.0)
@@ -216,14 +213,8 @@ PODS:
   - power_file_view (0.0.1):
     - Flutter
   - PromisesObjC (2.3.1)
-  - purchases_flutter (5.7.0):
-    - Flutter
-    - PurchasesHybridCommon (= 6.2.0)
-  - PurchasesHybridCommon (6.2.0):
-    - RevenueCat (= 4.26.0)
   - qr_bar_code (0.0.1):
     - Flutter
-  - RevenueCat (4.26.0)
   - screen_brightness_ios (0.1.0):
     - Flutter
   - SDWebImage (5.18.2):
@@ -278,7 +269,6 @@ PODS:
     - StripeUICore (= 23.12.0)
   - StripeUICore (23.12.0):
     - StripeCore (= 23.12.0)
-  - SwiftProtobuf (1.23.0)
   - SwiftyGif (5.4.4)
   - url_launcher_ios (0.0.1):
     - Flutter
@@ -297,14 +287,12 @@ DEPENDENCIES:
   - flutter_image_compress_common (from `.symlinks/plugins/flutter_image_compress_common/ios`)
   - flutter_network_connectivity (from `.symlinks/plugins/flutter_network_connectivity/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
-  - mad_pay_ios (from `.symlinks/plugins/mad_pay_ios/ios`)
   - mobile_scanner (from `.symlinks/plugins/mobile_scanner/ios`)
   - nsd_ios (from `.symlinks/plugins/nsd_ios/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - perfect_volume_control (from `.symlinks/plugins/perfect_volume_control/ios`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - power_file_view (from `.symlinks/plugins/power_file_view/ios`)
-  - purchases_flutter (from `.symlinks/plugins/purchases_flutter/ios`)
   - qr_bar_code (from `.symlinks/plugins/qr_bar_code/ios`)
   - screen_brightness_ios (from `.symlinks/plugins/screen_brightness_ios/ios`)
   - sensors_plus (from `.symlinks/plugins/sensors_plus/ios`)
@@ -340,8 +328,6 @@ SPEC REPOS:
     - MLKitVision
     - nanopb
     - PromisesObjC
-    - PurchasesHybridCommon
-    - RevenueCat
     - SDWebImage
     - SDWebImageWebPCoder
     - Stripe
@@ -352,7 +338,6 @@ SPEC REPOS:
     - StripePaymentSheet
     - StripePaymentsUI
     - StripeUICore
-    - SwiftProtobuf
     - SwiftyGif
 
 EXTERNAL SOURCES:
@@ -378,8 +363,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_network_connectivity/ios"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
-  mad_pay_ios:
-    :path: ".symlinks/plugins/mad_pay_ios/ios"
   mobile_scanner:
     :path: ".symlinks/plugins/mobile_scanner/ios"
   nsd_ios:
@@ -392,8 +375,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
   power_file_view:
     :path: ".symlinks/plugins/power_file_view/ios"
-  purchases_flutter:
-    :path: ".symlinks/plugins/purchases_flutter/ios"
   qr_bar_code:
     :path: ".symlinks/plugins/qr_bar_code/ios"
   screen_brightness_ios:
@@ -441,7 +422,6 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
   image_picker_ios: 4a8aadfbb6dc30ad5141a2ce3832af9214a705b5
   libwebp: 1786c9f4ff8a279e4dac1e8f385004d5fc253009
-  mad_pay_ios: 28a0b15f77044eecae3422848e258053d917a86f
   Mantle: c5aa8794a29a022dfbbfc9799af95f477a69b62d
   MLImage: 7bb7c4264164ade9bf64f679b40fb29c8f33ee9b
   MLKitBarcodeScanning: 04e264482c5f3810cb89ebc134ef6b61e67db505
@@ -455,10 +435,7 @@ SPEC CHECKSUMS:
   permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
   power_file_view: a4769bfa152a67e284f5d18ff3b71b5e216c3f9e
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
-  purchases_flutter: 9b875ca9540663d7cdaad9e574a65bd98a1e014c
-  PurchasesHybridCommon: 8ac2a833eb1a27c4d0d8a352418f1eaa5f4fe68d
   qr_bar_code: 318a8a325c17ec5bb98fd584c2790ec2c1a48791
-  RevenueCat: 1f3a5a1c3899cb27ef9279d77a01a807d489a240
   screen_brightness_ios: 715ca807df953bf676d339f11464e438143ee625
   SDWebImage: c0de394d7cf7f9838aed1fd6bb6037654a4572e4
   SDWebImageWebPCoder: af09429398d99d524cae2fe00f6f0f6e491ed102
@@ -475,7 +452,6 @@ SPEC CHECKSUMS:
   StripePaymentSheet: ec04397e9223c86a87be8b348cdbcf2075dd7a16
   StripePaymentsUI: 3dae7fed9b148b2749dff622ece45f9b441b88ce
   StripeUICore: 4a76fa59cab679e1b2fe1ad37d6b08c5bf2ada54
-  SwiftProtobuf: b70d65f419fbfe61a2d58003456ca5da58e337d6
   SwiftyGif: 93a1cc87bf3a51916001cf8f3d63835fb64c819f
   url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
   wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f

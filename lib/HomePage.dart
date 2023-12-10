@@ -1,20 +1,15 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fullscreen_window/fullscreen_window.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
 import 'package:flutter/material.dart';
+import 'package:in_app_update/in_app_update.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:puskazz_app/Pages/Etc/NetworkConnectivityPage.dart';
-import 'package:puskazz_app/Pages/Etc/PurchasePremiumPage.dart';
-import 'package:puskazz_app/Pages/MorePages/PremiumPurchased.dart';
 import 'package:puskazz_app/Pages/MorePages/SavedCheats.dart';
-import 'package:puskazz_app/Utils/AnalyticsService/AnalyticsServcie.dart';
-import 'package:puskazz_app/Utils/EncriptionManager.dart';
 import 'package:screen_brightness/screen_brightness.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'Widgets/GrdientButton.dart';
 
 class HomePage extends StatefulWidget {
@@ -33,7 +28,6 @@ class _HomePageState extends State<HomePage> {
   int pageIndex = 0;
   bool isCameraInitailized = false;
   PageController pageController = PageController();
-  Offerings? offerings;
   bool isTransitioned = false;
 
   @override
@@ -53,8 +47,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   void getMessage() async {
-    final url =
-        Uri.parse('https://szeligbalazs.github.io/shotgunapp-messages/');
+    await dotenv.load(fileName: ".env");
+    final url = Uri.parse(dotenv.env['MSG_GH_REPO_URL'] ?? '');
     final response = await http.get(url);
     dom.Document document = dom.Document.html(response.body);
 
@@ -65,6 +59,10 @@ class _HomePageState extends State<HomePage> {
         message = text[i];
       });
     }
+  }
+
+  Future<void> checkForUpdate() async {
+    // TODO: implement checkForUpdate
   }
 
   void dateTime() {

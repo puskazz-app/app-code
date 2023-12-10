@@ -3,11 +3,9 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:power_file_view/power_file_view.dart';
-import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:puskazz_app/Pages/LoadCheat/LoadTextCheat.dart';
 import 'package:puskazz_app/Pages/OnboardingScreens/PremiumShowcaseScreen.dart';
 import 'package:puskazz_app/Pages/MorePages/DocumentViewerPage.dart';
-import 'package:puskazz_app/Pages/MorePages/PremiumPurchased.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:status_bar_control/status_bar_control.dart';
 import 'firebase_options.dart';
@@ -17,7 +15,6 @@ import 'package:flutter/services.dart';
 import 'package:puskazz_app/HomePage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:puskazz_app/Pages/Etc/NetworkConnectivityPage.dart';
-import 'package:puskazz_app/Pages/Etc/PurchasePremiumPage.dart';
 import 'package:puskazz_app/Pages/LoadCheat/ImageBasedPage.dart';
 import 'package:puskazz_app/Pages/LoadCheat/LoadedCheatPage.dart';
 import 'package:puskazz_app/Pages/LoadCheat/QRScannerPage.dart';
@@ -118,17 +115,10 @@ class MainApp extends StatelessWidget {
         '/loadText': (context) => const LoadTextCheat(),
         '/image': (context) => const ImageBasedPage(),
         '/text': (context) => const TextBasedPage(),
-        //'/canvas': (context) => const SharedTextPage(),
-        '/purchase': (context) => PurchaseScreen(),
-        '/premiumPurchased': (context) => PremiumPurchased(),
         '/saved': (context) => const SavedCheats(),
         '/settings': (context) => const SettingsPage(),
         '/qr': (context) => const QRScannerPage(),
         '/premiumsShowcase': (context) => const PremiumShowcaseScreen(),
-        '/thanks': (context) => const ThanksForPurchaseScreen(),
-        '/errorPurchase': (context) => const ErrorPurchaseScreen(),
-        '/invalidPurchase': (context) => const InvalidPremiumScreen(),
-        '/cancelledPurchase': (context) => const CancelledPremiumScreen(),
         '/doc': (context) => const DocumentViewerPage(),
       },
       home: isSettedUp == true
