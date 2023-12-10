@@ -1,7 +1,7 @@
 name: puskazz_app
 description: Puskázás egyszerűen, gyorsan, biztonságosan!
 publish_to: "none"
-version: 1.2.6+35
+version: 1.2.7+36
 
 environment:
   sdk: ">=3.0.2 <4.0.0"
@@ -54,12 +54,11 @@ dependencies:
   math_expressions: ^2.4.0
   flutter_stripe: ^9.4.0
   flutter_dotenv: ^5.1.0
-  mad_pay: ^2.2.14
   status_bar_control: ^3.2.1
-  purchases_flutter: ^5.7.0
   shake: ^2.2.0
   file_picker: ^5.2.10
   power_file_view: ^1.0.1
+  in_app_update: ^4.2.2
 
 dev_dependencies:
   flutter_test:
